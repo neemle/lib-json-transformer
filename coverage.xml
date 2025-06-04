@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coverage line-rate="0.0786" branch-rate="0.05" version="1.9" timestamp="1749040641" lines-covered="32" lines-valid="407" branches-covered="4" branches-valid="80">
+  <sources>
+    <source>/Users/para/projects/net/Transformer/Transformer/</source>
+  </sources>
+  <packages>
+    <package name="Neemle.Utils.JsonTransformer" line-rate="0.0786" branch-rate="0.05" complexity="110">
+      <filters>
+        <filter>
+          <exclude>
+            <namespace name="Neemle.Utils.JsonTransformer.Samples" />
+          </exclude>
+        </filter>
+      </filters>
+      <classes>

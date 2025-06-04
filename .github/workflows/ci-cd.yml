@@ -1,0 +1,128 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, dev ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Install reportgenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+      - name: Run tests with coverage
+        run: |
+          dotnet test Transformer.Tests/Transformer.Tests.csproj --no-build --configuration Release \
+            /p:CollectCoverage=true \
+            /p:CoverletOutputFormat=cobertura \
+            /p:CoverletOutput=./
+
+      - name: Generate coverage report
+        run: |
+          COVERAGE_FILE=Transformer.Tests/coverage.cobertura.xml
+          if [ -z "$COVERAGE_FILE" ]; then
+            echo "❌ Помилка: coverage.cobertura.xml не знайдено!"
+            echo "Доступні *.xml співпадають:"
+            find . -type f -name "*.xml"
+            exit 1
+          else
+            echo "✅ coverage-файл знайдено: $COVERAGE_FILE"
+          fi
+
+          mkdir -p ./TestResults/CoverageReport
+          reportgenerator \
+            -reports:"$COVERAGE_FILE" \
+            -targetdir:"./TestResults/CoverageReport" \
+            -reporttypes:Html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./TestResults/CoverageReport
+
+      - name: Check test coverage
+        run: |
+          COVERAGE_FILE=Transformer.Tests/coverage.cobertura.xml
+          if [ -z "$COVERAGE_FILE" ]; then
+            echo "❌ Файл coverage.cobertura.xml не знайдено!"
+            exit 1
+          fi
+          COVERAGE_PERCENTAGE=$(grep -oP 'line-rate="\K[^"]+' $COVERAGE_FILE | awk '{print $1 * 100}')
+          echo "Coverage: $COVERAGE_PERCENTAGE%"
+          if (( $(echo "$COVERAGE_PERCENTAGE < 80" | bc -l) )); then
+            echo "Test coverage is below 80%"
+            exit 1
+          fi
+
+  publish-nuget:
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: dotnet build --configuration Release /p:Version=${{ steps.version.outputs.VERSION }}
+
+      - name: Pack
+        run: dotnet pack Transformer/Transformer.csproj --configuration Release --no-build --output ./nupkgs /p:Version=${{ steps.version.outputs.VERSION }}
+
+      - name: Push to NuGet
+        run: dotnet nuget push ./nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+
+  create-github-release:
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: ".github/changelog-config.json"
+          commitMode: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{steps.github_release.outputs.changelog}}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

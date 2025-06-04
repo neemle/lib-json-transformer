@@ -1,0 +1,27 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformer", "Transformer\Transformer.csproj", "{A29D59B5-BC67-4CC1-B3AF-15F5F487AC4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformer.Tests", "Transformer.Tests\Transformer.Tests.csproj", "{5B571303-2C30-4EA9-9A92-DFD25A224135}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformer.IntegrationTest", "Transformer.IntegrationTest\Transformer.IntegrationTest.csproj", "{D7E4CEEF-E98D-4343-857E-5B127C0E1901}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A29D59B5-BC67-4CC1-B3AF-15F5F487AC4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A29D59B5-BC67-4CC1-B3AF-15F5F487AC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A29D59B5-BC67-4CC1-B3AF-15F5F487AC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A29D59B5-BC67-4CC1-B3AF-15F5F487AC4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B571303-2C30-4EA9-9A92-DFD25A224135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B571303-2C30-4EA9-9A92-DFD25A224135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B571303-2C30-4EA9-9A92-DFD25A224135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B571303-2C30-4EA9-9A92-DFD25A224135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7E4CEEF-E98D-4343-857E-5B127C0E1901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E4CEEF-E98D-4343-857E-5B127C0E1901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E4CEEF-E98D-4343-857E-5B127C0E1901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E4CEEF-E98D-4343-857E-5B127C0E1901}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

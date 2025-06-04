@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Neemle.Utils.JsonTransformer</AssemblyName>
+        <RootNamespace>Neemle.Utils.JsonTransformer</RootNamespace>
+        <LangVersion>latestmajor</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Json Transformer Wrapper</Title>
+        <IsTrimmable>true</IsTrimmable>
+        <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+        <PublishTrimmed>true</PublishTrimmed>
+        <TrimMode>link</TrimMode>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <OptimizationPreference>Size</OptimizationPreference>
+        <DebuggerSupport>false</DebuggerSupport>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Description>Бібліотека для простої серіалізації та десеріалізації JSON з підтримкою обрізки коду (code trimming) в .NET 9.</Description>
+        <PackageTags>json;serialization;trimming</PackageTags>
+        <Version>1.0.0</Version>
+        <Authors>Neemle</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+</Project>

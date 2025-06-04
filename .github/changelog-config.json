@@ -1,0 +1,27 @@
+{
+  "categories": [
+    {
+      "title": "## 🚀 New Features",
+      "labels": ["feature", "enhancement"]
+    },
+    {
+      "title": "## 🐛 Bug Fixes",
+      "labels": ["fix", "bug"]
+    },
+    {
+      "title": "## 📦 Dependencies",
+      "labels": ["dependencies"]
+    },
+    {
+      "title": "## 📚 Documentation",
+      "labels": ["documentation"]
+    },
+    {
+      "title": "## 🔧 Technical Changes",
+      "labels": ["chore", "refactor", "test"]
+    }
+  ],
+  "template": "# What's new in ${{version}}\n\n${{changes}}\n",
+  "pr_template": "- ${{title}} (#${{number}})",
+  "empty_template": "- No changes"
+}
