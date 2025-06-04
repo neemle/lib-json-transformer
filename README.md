@@ -1,6 +1,6 @@
 # Neemle.Utils.JsonTransformer
 
-[![CI/CD Pipeline](https://github.com/YOUR_USERNAME/JsonTransformer/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/YOUR_USERNAME/JsonTransformer/actions/workflows/ci-cd.yml)
+[![CI/CD Pipeline](https://github.com/neemle/lib-json-transformer/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/neemle/lib-json-transformer/actions/workflows/ci-cd.yml)
 [![NuGet](https://img.shields.io/nuget/v/Neemle.Utils.JsonTransformer.svg)](https://www.nuget.org/packages/Neemle.Utils.JsonTransformer/)
 
 A library for simple JSON serialization and deserialization with code trimming support in .NET 9.
